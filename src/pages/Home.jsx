@@ -95,7 +95,7 @@ const Home = () => {
             {/* Hero Section Container (Tall for scrubbing) */}
             <section ref={heroRef} className="relative w-full h-[400vh] bg-brand-50">
                 {/* Sticky Wrapper Keeps the UI in Viewport */}
-                <div className="sticky top-[80px] h-[calc(100vh-80px)] w-full flex items-center justify-center overflow-hidden border-b border-brand-100">
+                <div className="sticky top-[96px] h-[calc(100vh-96px)] w-full flex items-center justify-center overflow-hidden border-b border-brand-100">
 
                     {/* Centered Product Canvas */}
                     <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-0 max-w-4xl mx-auto h-[60vh] md:h-[80vh] px-4 opacity-90">
