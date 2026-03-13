@@ -39,29 +39,33 @@ const Home = () => {
         });
 
         // Scene 1: Initial Hook (Left)
-        tl.to(textScene1Ref.current, { opacity: 0, y: -50, duration: 1 }, 0);
+        // Visible at snap 0. Starts fading out at 1.2s.
+        tl.to(textScene1Ref.current, { opacity: 0, y: -50, duration: 1 }, 1.2);
 
         // Scene 2: Ancient Wisdom (Right)
+        // Peak at snap 0.33 (~3.3s). Fades in 1.2-2.2s. Fades out 4.5-5.5s.
         tl.fromTo(textScene2Ref.current,
             { opacity: 0, x: 50 },
             { opacity: 1, x: 0, duration: 1 },
-            0.33
+            1.2
         );
-        tl.to(textScene2Ref.current, { opacity: 0, y: -50, duration: 1 }, 0.6);
+        tl.to(textScene2Ref.current, { opacity: 0, y: -50, duration: 1 }, 4.5);
 
         // Scene 3: 100% Raw (Left)
+        // Peak at snap 0.66 (~6.6s). Fades in 4.5-5.5s. Fades out 7.8-8.8s.
         tl.fromTo(textScene3Ref.current,
             { opacity: 0, x: -50 },
             { opacity: 1, x: 0, duration: 1 },
-            0.66
+            4.5
         );
-        tl.to(textScene3Ref.current, { opacity: 0, y: -50, duration: 1 }, 0.95);
+        tl.to(textScene3Ref.current, { opacity: 0, y: -50, duration: 1 }, 7.8);
 
         // Scene 4: Deep Restoration (Right)
+        // Peak at snap 1.0 (10s). Fades in 7.8-9.5s. Persists.
         tl.fromTo(textScene4Ref.current,
             { opacity: 0, x: 50 },
-            { opacity: 1, x: 0, duration: 1 },
-            1
+            { opacity: 1, x: 0, duration: 1.7 },
+            7.8
         );
 
     }, { dependencies: [heroRef, scrollContainerRef], revertOnUpdate: true });
