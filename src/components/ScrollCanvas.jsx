@@ -16,7 +16,7 @@ const ScrollCanvas = ({ frameCount = 126, scrollContainerRef, heroRef }) => {
             const img = new Image();
             // Prefix number with 00 to match %03d (e.g., 001, 012, 126)
             const frameNum = i.toString().padStart(3, '0');
-            img.src = `/src/assets/frames_nobg/frame_${frameNum}.webp`;
+            img.src = `/assets/frames_nobg/frame_${frameNum}.webp`;
             images.push(img);
         }
         imagesRef.current = images;
