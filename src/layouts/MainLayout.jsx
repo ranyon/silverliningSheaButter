@@ -18,7 +18,7 @@ const MainLayout = () => {
     return (
         <div
             ref={scrollRef}
-            className="relative h-screen overflow-y-auto overflow-x-hidden bg-surface scroll-smooth flex flex-col w-full"
+            className="relative h-screen overflow-y-auto overflow-x-hidden bg-surface flex flex-col w-full"
         >
             {/* The Navbar needs negative margin to stick to top, but because the container handles scroll we must style differently */}
             <div className="absolute top-0 w-full z-50">
