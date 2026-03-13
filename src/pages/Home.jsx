@@ -93,7 +93,7 @@ const Home = () => {
     return (
         <div className="flex flex-col w-full">
             {/* Hero Section Container (Tall for scrubbing) */}
-            <section ref={heroRef} className="relative w-full h-[400vh] bg-surface">
+            <section ref={heroRef} className="relative w-full h-[400vh] bg-brand-50">
                 {/* Sticky Wrapper Keeps the UI in Viewport */}
                 <div className="sticky top-[80px] h-[calc(100vh-80px)] w-full flex items-center justify-center overflow-hidden border-b border-brand-100">
 
