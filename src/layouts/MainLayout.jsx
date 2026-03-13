@@ -7,6 +7,7 @@ import CartDrawer from '../components/CartDrawer';
 const MainLayout = () => {
     const scrollRef = useRef(null);
     const location = useLocation();
+    const [isCartOpen, setIsCartOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
