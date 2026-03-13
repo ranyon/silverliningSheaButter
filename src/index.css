@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface text-textPrime font-sans antialiased selection:bg-brand-200/50 selection:text-textPrime;
+  }
+}
+
+@layer base {
+  :root {
+    --brand-50: 252 250 248;
+    /* Off-white with warmth */
+    --brand-100: 247 244 239;
+    --brand-200: 235 229 218;
+    --brand-300: 219 207 186;
+    /* Unrefined Shea Butter tone */
+    --brand-400: 198 178 145;
+    --brand-500: 173 147 106;
+    /* Core brand identity */
+    --brand-600: 147 119 82;
+    --brand-700: 122 96 66;
+    --brand-800: 102 81 58;
+    --brand-900: 83 67 49;
+    --brand-950: 45 36 26;
+
+    --surface: 247 246 244;
+    /* Warm off-white */
+    --text-primary: 38 31 29;
+    /* Deep espresso */
+    --text-secondary: 102 96 92;
+  }
+}
