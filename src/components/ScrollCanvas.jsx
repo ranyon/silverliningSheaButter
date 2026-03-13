@@ -11,27 +11,38 @@ const ScrollCanvas = ({ frameCount = 126, scrollContainerRef, heroRef }) => {
 
     // Preload images
     useEffect(() => {
-        const images = [];
-        for (let i = 1; i <= frameCount; i++) {
-            const img = new Image();
-            // Prefix number with 00 to match %03d (e.g., 001, 012, 126)
-            const frameNum = i.toString().padStart(3, '0');
-            img.src = `/assets/frames_nobg/frame_${frameNum}.webp`;
-            images.push(img);
-        }
-        imagesRef.current = images;
+        const loadImages = async () => {
+            const promises = [];
+            for (let i = 1; i <= frameCount; i++) {
+                const img = new Image();
+                const frameNum = i.toString().padStart(3, '0');
+                img.src = `/assets/frames_nobg/frame_${frameNum}.webp`;
 
-        // Draw first frame when image 1 loads
-        images[0].onload = () => {
-            if (canvasRef.current) {
-                const ctx = canvasRef.current.getContext('2d');
-                ctx.drawImage(images[0], 0, 0, canvasRef.current.width, canvasRef.current.height);
+                const promise = new Promise((resolve) => {
+                    img.onload = resolve;
+                    img.onerror = resolve; // Continue even on error
+                });
+                promises.push(promise);
+                imagesRef.current.push(img);
             }
+
+            await Promise.all(promises);
+
+            // Draw first frame immediately after all are ready or first is ready
+            if (canvasRef.current && imagesRef.current[0]) {
+                const ctx = canvasRef.current.getContext('2d');
+                ctx.drawImage(imagesRef.current[0], 0, 0, canvasRef.current.width, canvasRef.current.height);
+            }
+
+            // Critical for production: Refresh GSAP after assets are confirmed
+            ScrollTrigger.refresh();
         };
+
+        loadImages();
     }, [frameCount]);
 
     useGSAP(() => {
-        if (!canvasRef.current || !imagesRef.current.length || !heroRef.current) return;
+        if (!canvasRef.current || !heroRef.current) return;
 
         const ctx = canvasRef.current.getContext('2d');
         const playhead = { frame: 0 };
@@ -40,7 +51,7 @@ const ScrollCanvas = ({ frameCount = 126, scrollContainerRef, heroRef }) => {
             trigger: heroRef.current,
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.5, // 0.5 second smoothing applied to the scrub
+            scrub: 0.5,
             scroller: scrollContainerRef?.current || window,
             animation: gsap.to(playhead, {
                 frame: frameCount - 1,
@@ -48,16 +59,14 @@ const ScrollCanvas = ({ frameCount = 126, scrollContainerRef, heroRef }) => {
                 ease: "none",
                 onUpdate: () => {
                     const idx = Math.round(playhead.frame);
-                    if (imagesRef.current[idx] && imagesRef.current[idx].complete) {
+                    const img = imagesRef.current[idx];
+                    if (img) {
                         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-                        ctx.drawImage(imagesRef.current[idx], 0, 0, canvasRef.current.width, canvasRef.current.height);
+                        ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
                     }
                 }
             })
         });
-
-        // Refresh ScrollTrigger when images load to ensure proper calculations
-        ScrollTrigger.refresh();
 
     }, { dependencies: [heroRef, scrollContainerRef], revertOnUpdate: true });
 
